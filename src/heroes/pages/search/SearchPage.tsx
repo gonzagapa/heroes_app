@@ -1,8 +1,11 @@
+import SearchBarHero from "@/components/custom/SearchBarHero"
 
 
 function SearchPage() {
   return (
-    <div>SearchPage</div>
+    <>
+      <SearchBarHero/>
+    </>
   )
 }
 
