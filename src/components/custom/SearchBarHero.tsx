@@ -1,7 +1,7 @@
 import { Plus, Search } from "lucide-react"
 import { Input } from "../ui/input"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog"
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@radix-ui/react-select"
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../ui/select"
 import  { Button } from "../ui/button"
 import { Textarea } from "../ui/textarea"
 import { Label } from "../ui/label"
