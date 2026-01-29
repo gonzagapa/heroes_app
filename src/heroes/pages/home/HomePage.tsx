@@ -3,6 +3,9 @@ import HeroStats from "@/heroes/components/HeroStats"
 import HeroGrid from "@/heroes/components/HeroGrid"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react"
+import CustomPagination from "@/components/custom/CustomPagination"
 
 
  type Tabs = "All" | "Favorites" | "Villains" | "Heroes"; 
@@ -56,14 +59,14 @@ function HomePage() {
             <h1>Villanos</h1>
             <HeroGrid/>
           </TabsContent>
-          
+
           <TabsContent value="Heroes">
             <h1>Heroes</h1>
             <HeroGrid/>
           </TabsContent>
+      </Tabs> 
 
-
-      </Tabs>
+      <CustomPagination totalPages={5}/>
     </>
   )
 }
