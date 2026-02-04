@@ -110,7 +110,7 @@ const [heroes, setHeroes] = useState<Hero[]>(initialHeroes)
   return (
      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredHeroes.map((hero) => (
-          <HeroCardGrid {...hero}/>
+          <HeroCardGrid key={hero.id} {...hero}/>
           ))}
         </div>
   )

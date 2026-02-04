@@ -19,7 +19,7 @@ function CustomPagination({totalPages}:Props) {
           </Button>
 
           {Array.from({length:totalPages}).map((_,index)=>(
-            <Button variant={index+1 === currentPage ? "default" : "outline"} size="sm">
+            <Button key={index} variant={index+1 === currentPage ? "default" : "outline"} size="sm">
                 {index +1}
             </Button>
           ))}
