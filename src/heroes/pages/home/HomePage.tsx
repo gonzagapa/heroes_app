@@ -3,9 +3,8 @@ import HeroStats from "@/heroes/components/HeroStats"
 import HeroGrid from "@/heroes/components/HeroGrid"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react"
 import CustomPagination from "@/components/custom/CustomPagination"
+import  CustomBreadCrumbs from "@/components/custom/CustomBreadCrumbs"
 
 
  type Tabs = "All" | "Favorites" | "Villains" | "Heroes"; 
@@ -16,7 +15,13 @@ function HomePage() {
   return (
     <>
         {/* Header */}
-        <CustomJomboTron title="Superhero Database" description="Discover and manage your favorite superheroes"/>
+        <CustomJomboTron title="Superhero Database" description="Discover and manage your favorite superheroes"/> 
+
+        <CustomBreadCrumbs items={[
+          {href:"/",label:"Home"} 
+        ]} 
+        current="Home"
+        />
 
 
         {/* HeroStats */}

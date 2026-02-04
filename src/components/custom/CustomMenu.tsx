@@ -29,6 +29,12 @@ function CustomMenu() {
                 <Link to="/search">Search</Link>
             </NavigationMenuLink>
 
+            <NavigationMenuLink 
+                asChild
+                className={cn(isActive('/heroes') && 'bg-slate-300 rounded-md', 'p-2') }>
+                <Link to="/heroes">Heroes</Link>
+            </NavigationMenuLink>
+
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>

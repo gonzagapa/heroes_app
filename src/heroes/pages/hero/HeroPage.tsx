@@ -1,7 +1,14 @@
-import React from 'react'
+import CustomBreadCrumbs from '@/components/custom/CustomBreadCrumbs'
 
 export default function HeroPage() {
   return (
-    <div>HeroPage</div>
+    <div>
+       <CustomBreadCrumbs items={[
+          {href:"/",label:"Home"},
+          {href:"/hero",label:"Hero"},
+        ]} 
+        current="Hero"
+        />
+    </div>
   )
 }
