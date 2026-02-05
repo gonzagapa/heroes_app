@@ -1,6 +1,6 @@
 import CustomJomboTron from "@/components/custom/CustomJomboTron"
-import SearchBarHero from "@/components/custom/SearchBarHero"
 import HeroStats from "@/heroes/components/HeroStats"
+import { SearchControls } from "./ui/SearchControls"
 
 
 function SearchPage() {
@@ -12,7 +12,7 @@ function SearchPage() {
       {/* HeroStats */}
       <HeroStats/>
 
-      <SearchBarHero/>
+      <SearchControls/>
     </>
   )
 }
