@@ -7,18 +7,25 @@ import CustomPagination from "@/components/custom/CustomPagination"
 import  CustomBreadCrumbs from "@/components/custom/CustomBreadCrumbs"
 import { useQuery } from "@tanstack/react-query"
 import { getHeroesByPageAction } from "@/heroes/actions/get-heroes-by-page"
+import { Spinner } from "@/components/ui/spinner"
 
 
  type Tabs = "All" | "Favorites" | "Villains" | "Heroes"; 
 
 function HomePage() { 
 
-  const {data:heroes} = useQuery({queryKey:["heroes"], queryFn:getHeroesByPageAction}) 
+  const {data:heroesResponse, isLoading} = useQuery({queryKey:["heroes"], queryFn:getHeroesByPageAction}) 
+  const [activeTab,setActiveTab] = useState<Tabs>("All");
 
-  console.log(heroes);
+  if(isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spinner/>
+      </div>
+    )
+  }
   
 
-  const [activeTab,setActiveTab] = useState<Tabs>("All");
   return (
     <>
         {/* Header */}
@@ -59,22 +66,22 @@ function HomePage() {
 
           <TabsContent value="All">
             <h1>Todos los heroes</h1>
-            <HeroGrid/>
+            <HeroGrid heroes={heroesResponse?.heroes ?? []}/>
           </TabsContent>
 
           <TabsContent value="Favorites">
             <h1>Favoritos</h1>
-            <HeroGrid/>
+            {/* <HeroGrid/> */}
           </TabsContent>
 
           <TabsContent value="Villains">
             <h1>Villanos</h1>
-            <HeroGrid/>
+            {/* <HeroGrid/> */}
           </TabsContent>
 
           <TabsContent value="Heroes">
             <h1>Heroes</h1>
-            <HeroGrid/>
+            {/* <HeroGrid/> */}
           </TabsContent>
       </Tabs> 
 

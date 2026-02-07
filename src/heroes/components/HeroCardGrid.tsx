@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Heart, Shield, Zap } from 'lucide-react'
-import React from 'react'
+import { useNavigate } from 'react-router'
 
 interface Hero {
   id: string
@@ -12,6 +12,7 @@ interface Hero {
   strength: number
   team: string
   image: string
+  slug: string
 }
 
 
@@ -29,18 +30,26 @@ interface Hero {
   }
 
 
-function HeroCardGrid(hero:Hero) {
+function HeroCardGrid(hero:Hero) { 
+
+  const navigate = useNavigate() 
+
+  const handleNavigate = () => {
+    navigate(`/heroes/${hero.slug}`)
+  }
+
   return (
-     <Card key={hero.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="relative h-48 bg-gradient-to-br from-blue-100 to-purple-100">
+     <Card key={hero.id} className="group overflow-hidden hover:shadow-lg transition-shadow pt-0">
+              <div className="relative h-[230px] bg-linear-to-br from-blue-100 to-purple-100">
                 <img src={hero.image || "/placeholder.svg"} alt={hero.alias}  
-                className="object-cover w-full h-full" />
+                onClick={handleNavigate}
+                className="object-cover transitio-all duration-500 group-hover:scale-110 absolute top-[-30px] object-center w-full h-full" />
                 <div className="absolute top-2 right-2 flex items-center gap-1 bg-white/90 rounded-full px-2 py-1">
                   <span className={`font-semibold ${getStrengthColor(hero.strength)}`}>{hero.strength}</span>
                   <span className={getStrengthColor(hero.strength)}>{getStrengthIcon(hero.strength)}</span>
                 </div>
               </div>
-              <CardHeader>
+              <CardHeader className="py-3 z-10 bg-gray-100/50 backdrop-blur-sm relative top-1 group-hover:top-[-10px] transition-all duration-300">
                 <div className="flex justify-between items-start">
                   <div>
                     <CardTitle className="text-xl">{hero.alias}</CardTitle>

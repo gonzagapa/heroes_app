@@ -7,4 +7,5 @@ export interface Hero {
   strength: number
   team: string
   image: string
+  slug: string
 }
