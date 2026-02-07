@@ -5,11 +5,18 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useState } from "react"
 import CustomPagination from "@/components/custom/CustomPagination"
 import  CustomBreadCrumbs from "@/components/custom/CustomBreadCrumbs"
+import { useQuery } from "@tanstack/react-query"
+import { getHeroesByPageAction } from "@/heroes/actions/get-heroes-by-page"
 
 
  type Tabs = "All" | "Favorites" | "Villains" | "Heroes"; 
 
-function HomePage() {
+function HomePage() { 
+
+  const {data:heroes} = useQuery({queryKey:["heroes"], queryFn:getHeroesByPageAction}) 
+
+  console.log(heroes);
+  
 
   const [activeTab,setActiveTab] = useState<Tabs>("All");
   return (
