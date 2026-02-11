@@ -9,4 +9,10 @@ export interface Hero {
   image: string
   slug: string
   category:string
+  intelligence: number,
+  speed: number,
+  durability: number,
+  status: string,
+  firstAppearance:string,
+  universe:string
 }
