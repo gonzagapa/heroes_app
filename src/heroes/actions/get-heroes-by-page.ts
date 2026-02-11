@@ -5,10 +5,11 @@ const BASE_URL = import.meta.env.VITE_API_URL;
 
 interface Pagination {
     page: number,
+    category?:string,
     limit?:number
 }
 
-    export const getHeroesByPageAction = async ({page,limit = 6}:Pagination) =>{
+    export const getHeroesByPageAction = async ({page,limit = 6, category = 'all'}:Pagination) =>{
 
         if(isNaN(page)) page = 1;
 
@@ -16,7 +17,8 @@ interface Pagination {
         const {data} = await api.get<HeroesResponse>("/api/heroes", {
             params:{
                 limit,
-                offset: (page - 1) * limit
+                offset: (page - 1) * limit,
+                category
             }
         }); 
 
