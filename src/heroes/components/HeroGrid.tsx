@@ -13,9 +13,6 @@ function HeroGrid({heroes}:HeroGrid) {
     
 const [heroesList, setHeroes] = useState<Hero[]>(heroes)
 
-const [searchTerm, setSearchTerm] = useState("")
-
-
   return (
      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {heroesList.map((hero) => (

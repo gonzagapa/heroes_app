@@ -9,6 +9,7 @@ import { getHeroesByPageAction } from "@/heroes/actions/get-heroes-by-page"
 import { Spinner } from "@/components/ui/spinner"
 import { useSearchParams } from "react-router"
 import { useMemo } from "react"
+import { useHeroSummary } from "@/hooks/useHeroSummary"
 
 
 type Tabs = "All" | "Favorites" | "Villains" | "Heroes"; 
@@ -29,9 +30,22 @@ function HomePage() {
   }, [activeTab]);
   
   const {data:heroesResponse, isLoading} = 
-  useQuery({queryKey:["heroes"], queryFn:() => getHeroesByPageAction({page: +page,limit: +limit})}) 
+    useQuery({
+    queryKey:["heroes",{page,limit}], 
+    queryFn:() => getHeroesByPageAction({page: +page,limit: +limit})}) 
+  
+     
+
+  const {data:summary} = useHeroSummary();
   
 
+  const response = useMemo(() => {
+    return heroesResponse?.heroes ?? [];
+  }, [heroesResponse]); 
+
+  const villains = response.filter((hero) => hero.category === "Villain"); 
+
+  const heroes = response.filter((hero) => hero.category === "Hero"); 
 
   if(isLoading) {
     return (
@@ -64,7 +78,7 @@ function HomePage() {
               searchParams.set("tab", "All");
               return searchParams;
             })} 
-            value="All">Todos</TabsTrigger>
+            value="All">Todos {summary?.totalHeroes}</TabsTrigger>
             <TabsTrigger 
             onClick={()=> setSearchParams((searchParams) => {
               searchParams.set("tab", "Favorites");
@@ -78,7 +92,7 @@ function HomePage() {
               searchParams.set("tab", "Villains");
               return searchParams;
             })} 
-            value="Villains">Villanos
+            value="Villains">Villanos {summary?.villainCount}
             </TabsTrigger> 
 
             <TabsTrigger 
@@ -86,7 +100,7 @@ function HomePage() {
               searchParams.set("tab", "Heroes");
               return searchParams;
             })} 
-            value="Heroes">Heroes
+            value="Heroes">Heroes {summary?.heroCount}
             </TabsTrigger> 
 
           </TabsList>
@@ -94,22 +108,22 @@ function HomePage() {
 
           <TabsContent value="All">
             <h1>Todos los heroes</h1>
-            <HeroGrid heroes={heroesResponse?.heroes ?? []}/>
+            <HeroGrid heroes={response}/>
           </TabsContent>
 
           <TabsContent value="Favorites">
             <h1>Favoritos</h1>
-            {/* <HeroGrid/> */}
+            <HeroGrid heroes={[]}/>
           </TabsContent>
 
           <TabsContent value="Villains">
             <h1>Villanos</h1>
-            {/* <HeroGrid/> */}
+            <HeroGrid heroes={villains}/>
           </TabsContent>
 
           <TabsContent value="Heroes">
             <h1>Heroes</h1>
-            {/* <HeroGrid/> */}
+            <HeroGrid heroes={heroes}/>
           </TabsContent>
       </Tabs> 
 

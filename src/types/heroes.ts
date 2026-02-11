@@ -8,4 +8,5 @@ export interface Hero {
   team: string
   image: string
   slug: string
+  category:string
 }
