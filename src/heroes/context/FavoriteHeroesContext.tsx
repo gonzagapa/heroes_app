@@ -1,5 +1,6 @@
-import type { Hero } from "@/types/heroes";
-import { createContext, useState, type PropsWithChildren } from "react";
+import { HeroSchema, type Hero } from "@/types/heroes";
+import * as z from "zod"; 
+import { createContext, useEffect, useState, type PropsWithChildren } from "react";
 
 interface FavoriteHeroesContext {
    favorites:Hero[],
@@ -10,11 +11,22 @@ interface FavoriteHeroesContext {
    toggleFavorite:(hero:Hero)=> void,
 }
 
+const key = 'favorites'
+
+//1. creamos el contexto
 export const FavoriteHeroesContext = createContext({} as FavoriteHeroesContext);
 
+const getFavoritesFromLocalStorage = ():Hero[] =>{
+    const favorites = localStorage.getItem(key);
+    const resultParsed = HeroSchema.array().safeParse(JSON.parse(favorites || '[]'))
+    return resultParsed.success ? resultParsed.data: [];
+
+}
+
+//2. creamos el provider
 export const FavoriteHeroesProvider = ({children}: PropsWithChildren) => {
 
-    const [favorites, setFavorites] = useState<Hero[]>([])
+    const [favorites, setFavorites] = useState<Hero[]>(getFavoritesFromLocalStorage())
 
     const toggleFavorite = (hero:Hero)=>{
         const favorite = isFavorite(hero);
@@ -26,6 +38,10 @@ export const FavoriteHeroesProvider = ({children}: PropsWithChildren) => {
     }
 
     const isFavorite = (hero:Hero) => favorites.some(favorites => favorites.id === hero.id);
+
+    useEffect(() => {
+        localStorage.setItem(key, JSON.stringify(favorites));
+    }, [favorites]);
 
     return (
         <FavoriteHeroesContext.Provider value={
