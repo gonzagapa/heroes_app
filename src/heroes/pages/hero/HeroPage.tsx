@@ -1,4 +1,3 @@
-import CustomBreadCrumbs from '@/components/custom/CustomBreadCrumbs'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
@@ -6,7 +5,7 @@ import { Spinner } from '@/components/ui/spinner'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useHeroBySlug } from '@/hooks/useHeroBySlug'
 import { Award, Brain, Gauge, Shield, Star, Users, Zap } from 'lucide-react'
-import { useParams } from 'react-router'
+import { Navigate, useParams } from 'react-router'
 
 
   const getStatusColor = (status: string) => {
@@ -41,14 +40,14 @@ export function HeroPage() {
 
   const id = slug ? slug: ""
 
-  const {data:superheroData, isLoading} = useHeroBySlug(id)
+  const {data:superheroData, isLoading, isError} = useHeroBySlug(id)
 
   if(isLoading){
     return  (<Spinner/>)
   }
 
-  if(!superheroData){
-    return (<Spinner/>)
+  if(!superheroData || isError){
+    return (<Navigate to={"/"}/>)
   }
   
 
@@ -247,7 +246,7 @@ export function HeroPage() {
                 {superheroData.powers.map((power, index) => (
                   <div
                     key={index}
-                    className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-200"
+                    className="bg-linear-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-200"
                   >
                     <div className="flex items-center gap-3">
                       <div className="bg-blue-500 p-2 rounded-full">
