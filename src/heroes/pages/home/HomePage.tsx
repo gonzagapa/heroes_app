@@ -6,9 +6,10 @@ import CustomPagination from "@/components/custom/CustomPagination"
 import  CustomBreadCrumbs from "@/components/custom/CustomBreadCrumbs"
 import { Spinner } from "@/components/ui/spinner"
 import { useSearchParams } from "react-router"
-import { useMemo } from "react"
+import { use, useMemo } from "react"
 import { useHeroSummary } from "@/hooks/useHeroSummary"
 import { useHeroPagination } from "@/hooks/useHeroPagination"
+import { FavoriteHeroesContext } from "@/heroes/context/FavoriteHeroesContext"
 
 
 type Tabs = "All" | "Favorites" | "Villains" | "Heroes"; 
@@ -17,6 +18,8 @@ function HomePage() {
 
   
   let [searchParams, setSearchParams] = useSearchParams(); 
+
+  const {favoriteCount,favorites} = use(FavoriteHeroesContext);
   
   const activeTab = searchParams.get("tab") || 'All';  
   
@@ -81,7 +84,7 @@ function HomePage() {
               searchParams.set("tab", "Favorites");
               return searchParams;
             })} 
-            value="Favorites">Favoritos
+            value="Favorites">Favoritos ({favoriteCount})
             </TabsTrigger>
 
             <TabsTrigger 
@@ -114,7 +117,7 @@ function HomePage() {
 
           <TabsContent value="Favorites">
             <h1>Favoritos</h1>
-            <HeroGrid heroes={[]}/>
+            <HeroGrid heroes={favorites}/>
           </TabsContent>
 
           <TabsContent value="Villains">

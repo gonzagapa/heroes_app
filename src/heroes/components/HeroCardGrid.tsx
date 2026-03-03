@@ -1,19 +1,13 @@
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Heart, Shield, Zap } from 'lucide-react'
+import { use } from 'react'
 import { useNavigate } from 'react-router'
+import { FavoriteHeroesContext } from '../context/FavoriteHeroesContext'
+import type { Hero } from '@/types/heroes'
+import { cn } from '@/lib/utils'
 
-interface Hero {
-  id: string
-  name: string
-  alias: string
-  powers: string[]
-  description: string
-  strength: number
-  team: string
-  image: string
-  slug: string
-}
 
 
  const getStrengthColor = (strength: number) => {
@@ -33,6 +27,7 @@ interface Hero {
 function HeroCardGrid(hero:Hero) { 
 
   const navigate = useNavigate() 
+  const {isFavorite,toggleFavorite} = use(FavoriteHeroesContext)
 
   const handleNavigate = () => {
     navigate(`/heroes/${hero.slug}`)
@@ -47,6 +42,11 @@ function HeroCardGrid(hero:Hero) {
                 <div className="absolute top-2 right-2 flex items-center gap-1 bg-white/90 rounded-full px-2 py-1">
                   <span className={`font-semibold ${getStrengthColor(hero.strength)}`}>{hero.strength}</span>
                   <span className={getStrengthColor(hero.strength)}>{getStrengthIcon(hero.strength)}</span>
+                </div>
+                <div>
+                  <Button onClick={() => toggleFavorite(hero)} variant="outline" size="sm" className={` ${cn("absolute bottom-2 right-2")}`}>
+                    <Heart className={cn("h-4 w-4", isFavorite(hero) ? 'text-red-500 fill-red-500' : 'text-gray-500 ')}/>
+                  </Button>
                 </div>
               </div>
               <CardHeader className="py-3 z-10 bg-gray-100/50 backdrop-blur-sm relative top-1 group-hover:top-[-10px] transition-all duration-300">
