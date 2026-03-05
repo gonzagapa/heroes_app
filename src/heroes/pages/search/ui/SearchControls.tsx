@@ -1,8 +1,7 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Accordion, AccordionContent, AccordionItem } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
-import { cn } from '@/lib/utils';
 import { Search, Filter, SortAsc, Grid, Plus } from 'lucide-react';
 import { useRef } from 'react';
 import { useSearchParams } from 'react-router';
@@ -13,6 +12,7 @@ export const SearchControls = () => {
   let [searchParams, setSearchParams] = useSearchParams(); 
 
   const activeSearch = searchParams.get("advance-filters") ?? ""
+  const strength = Number(searchParams.get("strength") ?? 0 ) 
 
 
   const setQueryParams = (name:string, value:string)=>{
@@ -46,19 +46,20 @@ export const SearchControls = () => {
 
         {/* Action buttons */}
         <div className="flex gap-2">
-          <Button variant={"outline"} className={`h-12 ${activeSearch ? "bg-accent" : "bg-transparent"} `}
+          <Button variant={ activeSearch == "active" ? "default" : "outline"} className={`h-12 `}
             onClick={()=>{
               if(activeSearch === ""){
                 setQueryParams("advance-filters", "active")
-
-              }else{
-                setQueryParams("advance-filters", "")
+                return;
               }
+              setQueryParams("advance-filters", "")
             }}
           >
             <Filter className="h-4 w-4 mr-2" />
             Filters
           </Button>
+
+          
 
           <Button variant="outline" className="h-12 bg-transparent">
             <SortAsc className="h-4 w-4 mr-2" />
@@ -77,7 +78,7 @@ export const SearchControls = () => {
       </div>
 
       {/* Advanced Filters */}
-      <Accordion type="single" collapsible defaultValue={activeSearch}>
+      <Accordion type="single" collapsible value={activeSearch}>
           <AccordionItem value="active">
             <AccordionContent>
                     <div className="bg-white rounded-lg p-6 mb-8 shadow-sm border">
@@ -112,8 +113,9 @@ export const SearchControls = () => {
                 </div>
               </div>
               <div className="mt-4">
-                <label className="text-sm font-medium">Minimum Strength: 0/10</label>
-                <Slider defaultValue={[5]} max={10} step={1} />
+                <label className="text-sm font-medium">Minimum Strength: {strength}/10</label>
+                <Slider defaultValue={[5]} value={[strength]} max={10} step={1} onValueChange={(value)=>
+                     setQueryParams("strength", value.toString())}/>
               </div>
             </div>
             </AccordionContent>
