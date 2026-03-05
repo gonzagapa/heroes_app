@@ -35,10 +35,10 @@ function HeroCardGrid(hero:Hero) {
 
   return (
      <Card key={hero.id} className="group overflow-hidden hover:shadow-lg transition-shadow pt-0">
-              <div className="relative h-[230px] bg-linear-to-br from-blue-100 to-purple-100">
+              <div className="relative min-h-[250px] bg-linear-to-br from-blue-100 to-purple-100">
                 <img src={hero.image || "/placeholder.svg"} alt={hero.alias}  
                 onClick={handleNavigate}
-                className="object-cover transitio-all duration-500 group-hover:scale-110 absolute top-[-30px] object-center w-full h-full" />
+                className="object-cover object-center transitio-all duration-500 group-hover:scale-110 absolute  w-full h-full" />
                 <div className="absolute top-2 right-2 flex items-center gap-1 bg-white/90 rounded-full px-2 py-1">
                   <span className={`font-semibold ${getStrengthColor(hero.strength)}`}>{hero.strength}</span>
                   <span className={getStrengthColor(hero.strength)}>{getStrengthIcon(hero.strength)}</span>
@@ -49,7 +49,7 @@ function HeroCardGrid(hero:Hero) {
                   </Button>
                 </div>
               </div>
-              <CardHeader className="py-3 z-10 bg-gray-100/50 backdrop-blur-sm relative top-1 group-hover:top-[-10px] transition-all duration-300">
+              <CardHeader className="py-3 z-10 bg-gray-100/50 backdrop-blur-sm relative top-1 group-hover:-top-px transition-all duration-300">
                 <div className="flex justify-between items-start">
                   <div>
                     <CardTitle className="text-xl">{hero.alias}</CardTitle>
