@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 import { Spinner } from '@/components/ui/spinner'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { useHeroBySlug } from '@/hooks/useHeroBySlug'
+import { useHeroBySlug } from '@/heroes/hooks/useHeroBySlug'
 import { Award, Brain, Gauge, Shield, Star, Users, Zap } from 'lucide-react'
 import { Navigate, useParams } from 'react-router'
 

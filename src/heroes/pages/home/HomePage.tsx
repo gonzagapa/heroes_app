@@ -7,8 +7,8 @@ import  CustomBreadCrumbs from "@/components/custom/CustomBreadCrumbs"
 import { Spinner } from "@/components/ui/spinner"
 import { useSearchParams } from "react-router"
 import { use, useMemo } from "react"
-import { useHeroSummary } from "@/hooks/useHeroSummary"
-import { useHeroPagination } from "@/hooks/useHeroPagination"
+import { useHeroSummary } from "@/heroes/hooks/useHeroSummary"
+import { useHeroPagination } from "@/heroes/hooks/useHeroPagination"
 import { FavoriteHeroesContext } from "@/heroes/context/FavoriteHeroesContext"
 
 

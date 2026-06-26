@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge"
 import { Heart, Trophy, Users, Zap } from "lucide-react"
 import HeroCard from "./HeroCard"
 import { Spinner } from "@/components/ui/spinner"
-import { useHeroSummary } from "@/hooks/useHeroSummary"
+import { useHeroSummary } from "@/heroes/hooks/useHeroSummary"
 import { FavoriteHeroesContext } from "../context/FavoriteHeroesContext"
 import { use } from "react"
 
