@@ -9,6 +9,7 @@
     "ignoreDeprecations": "6.0",
     "paths": {
       "@/*": ["./src/*"]
-    }
-  }
+    }, 
+    "types": ["vitest/globals"]
+  },
 }
