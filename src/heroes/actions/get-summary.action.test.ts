@@ -1,14 +1,15 @@
-import { getSummaryAction } from "./get-summary.action"
+import { getSummaryAction } from "./get-summary.action";
 
-describe("getSummaryAction",()=>{
-    test("should fetch summary info of heroes info",async ()=>{
+
+describe('getSummaryAction',()=>{
+    test("should return summary information",async()=>{
         const data = await getSummaryAction();
-
-        expect(data).toHaveProperty("totalHeroes"); 
-        expect(data).toHaveProperty("strongestHero"); 
-        expect(data).toHaveProperty("smartestHero"); 
-        expect(data).toHaveProperty("heroCount"); 
-        expect(data).toHaveProperty("villainCount"); 
-
+        expect(data).toEqual({
+            totalHeroes: expect.any(Number),
+            strongestHero: expect.any(Object),
+            smartestHero: expect.any(Object),
+            heroCount: expect.any(Number),
+            villainCount: expect.any(Number), 
+        })
     })
 })
