@@ -6,10 +6,12 @@ import { getSummaryAction } from '@/heroes/actions/get-summary.action'
 import type { Hero } from '@/types/heroes'
 
 
+//Le dices a Vitest: "NO uses la funcion original, usa una version para pruebas"
 vi.mock('@/heroes/actions/get-summary.action',()=>({
         getSummaryAction: vi.fn()
 }))
 
+//Esto le dice a typescript que es uan funcion mock y puede tener las propiedad de vi.fn()
 const mockeGetSummaryAction = vi.mocked(getSummaryAction)
 
 const queryClient = new QueryClient({
