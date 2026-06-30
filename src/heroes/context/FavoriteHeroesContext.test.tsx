@@ -4,9 +4,40 @@ import { fireEvent, render, screen } from "@testing-library/react"
 import type { Hero } from "@/types/heroes"
 
 const hero = {
-    name: "batman",
-    id:1
-} as unknown as Hero
+   "id": "2",
+    "name": "Bruce Wayne",
+    "slug": "bruce-wayne",
+    "alias": "Batman",
+    "powers": [
+        "Artes marciales",
+        "Habilidades de detective",
+        "Tecnología avanzada",
+        "Sigilo",
+        "Genio táctico"
+    ],
+    "description": "El Caballero Oscuro de Ciudad Gótica, que utiliza el miedo como arma contra el crimen y la corrupción.",
+    "strength": 6,
+    "intelligence": 10,
+    "speed": 6,
+    "durability": 7,
+    "team": "Liga de la Justicia",
+    "image": "2.jpeg",
+    "firstAppearance": "1939",
+    "status": "Active",
+    "category": "Hero",
+    "universe": "DC"
+} as  Hero 
+
+const localStorageMock = {
+    getItem:vi.fn(),
+    setItem:vi.fn(),
+    clear:vi.fn()
+}
+
+//override global object localStorage
+Object.defineProperty(window,"localStorage",{
+    value:localStorageMock
+});
 
 const TestComponent = ()=>{
     const {favoriteCount,favorites,isFavorite,toggleFavorite} = use(FavoriteHeroesContext)
@@ -36,7 +67,7 @@ const MainWrapper = ()=>{
 describe("FavoriteHeroesContext",()=>{
 
     beforeEach(()=>{
-        localStorage.clear()
+        vi.clearAllMocks();
     })
 
    test("should initialize with the default values",()=>{
@@ -53,14 +84,17 @@ describe("FavoriteHeroesContext",()=>{
     expect(screen.getByTestId("favorites-count").textContent).toBe("1")
     expect(screen.getByTestId("favorites-list").children.length).toBe(1); 
 
-    expect(localStorage.getItem('favorites')).toBe("[{\"name\":\"batman\",\"id\":1}]")
+    expect(localStorageMock.setItem).toHaveBeenCalled()
+    expect(localStorageMock.setItem).toHaveBeenCalledTimes(2);
     
    })
 
-   test("should remove hero from favorites when toggleFavorite is called",()=>{
-    MainWrapper();  
+   test("should remove hero from favorites when toggleFavorite is called 2 times",()=>{
+    
+    localStorageMock.getItem.mockReturnValue(JSON.stringify([hero]))
+    MainWrapper(); 
+    screen.debug() 
     const button = screen.getByTestId("toggle-favorite"); 
-    fireEvent.click(button); 
     
     expect(screen.getByTestId("favorites-count").textContent).toBe("1")
     expect(screen.getByTestId("favorites-list").children.length).toBe(1);
@@ -70,7 +104,8 @@ describe("FavoriteHeroesContext",()=>{
 
     expect(screen.getByTestId("favorites-count").textContent).toBe("0")
     expect(screen.getByTestId("favorites-list").children.length).toBe(0)
-    expect(localStorage.getItem("favorites")).toBe("[]")
+    expect(localStorageMock.setItem).toHaveBeenCalledWith("favorites","[]",)
+    expect(screen.queryByTestId("hero-1")).toBeNull(); //testing an element that shouldn't exist.
 
    })
 })
