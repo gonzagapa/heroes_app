@@ -93,7 +93,6 @@ describe("FavoriteHeroesContext",()=>{
     
     localStorageMock.getItem.mockReturnValue(JSON.stringify([hero]))
     MainWrapper(); 
-    screen.debug() 
     const button = screen.getByTestId("toggle-favorite"); 
     
     expect(screen.getByTestId("favorites-count").textContent).toBe("1")

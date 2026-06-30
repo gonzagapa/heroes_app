@@ -11,9 +11,10 @@ function HeroStats() {
   const {data:summary, isLoading, isError} = useHeroSummary()
     const {favoriteCount, favorites} = use(FavoriteHeroesContext)
 
-  if(isLoading) return <Spinner/>
+  if(isLoading|| !summary ) return <Spinner/>
 
-  if(isError || !summary) return <div>Error al cargar los datos</div>
+  if(isError) return <div>Error al cargar los datos</div>
+
 
   const percentage = ((favoriteCount/summary.totalHeroes)*100).toFixed(2);
 
@@ -34,7 +35,7 @@ function HeroStats() {
               </div>
           </HeroCard>
           <HeroCard title="Favorites" icon={<Heart className="h-4 w-4 text-muted-foreground" />}>
-             <div className="text-2xl font-bold text-red-600">{favoriteCount}</div>
+             <div className="text-2xl font-bold text-red-600" data-testid="favorite-count">{favoriteCount}</div>
               <p className="text-xs text-muted-foreground">{percentage}% of total</p>
           </HeroCard>
           <HeroCard title="Strongest" icon={<Zap className="h-4 w-4 text-muted-foreground" />}>
