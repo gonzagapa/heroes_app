@@ -14,7 +14,7 @@ import { FavoriteHeroesContext } from "@/heroes/context/FavoriteHeroesContext"
 
 type Tabs = "All" | "Favorites" | "Villains" | "Heroes"; 
 
-function HomePage() { 
+export function HomePage() { 
 
   
   let [searchParams, setSearchParams] = useSearchParams(); 
@@ -135,5 +135,3 @@ function HomePage() {
     </>
   )
 }
-
-export default HomePage
