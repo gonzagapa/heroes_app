@@ -27,6 +27,10 @@ export const AppRouter = createBrowserRouter([
                 path:'search',
                 Component:SearchPage
             },
+            {
+                path:"*",
+                Component:HomePage
+            }
         ]
     },
 {

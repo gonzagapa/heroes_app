@@ -14,6 +14,10 @@ vi.mock("@/admin/pages/AdminPage",()=>({
     default: ()=><div data-testid="admin-page"></div>
 }))
 
+vi.mock("@/heroes/pages/search/SearchPage",()=>({
+    default: ()=>(<div data-testid="search-page"></div>)
+}))
+
 vi.mock("@/heroes/pages/hero/HeroPage",()=>({
     HeroPage: ()=>{
          const {slug} = useParams();
@@ -44,6 +48,14 @@ describe("AppRouter",()=>{
         expect(await screen.findByTestId("admin-page"))
     })
 
+    test("should render search page at /search", async ()=>{
+        const routes = createMemoryRouter(AppRouter.routes,{
+            initialEntries:["/search"]
+        })
+        render(<RouterProvider router={routes}/>)
+        expect(await screen.findByTestId("search-page")).toBeDefined()
+    })
+
     test("should render heroes page with given slug",()=>{
         const routes =  createMemoryRouter(AppRouter.routes,{
             initialEntries:["/heroes/superman"]
@@ -51,5 +63,14 @@ describe("AppRouter",()=>{
          render(<RouterProvider router={routes} />)
          expect(screen.getByTestId("heroes-page")).toBeDefined(); 
          expect(screen.getByTestId("heroes-page").textContent).toContain("superman")
+    })
+
+    test("should render home page for unknown route path",()=>{
+        const routes =  createMemoryRouter(AppRouter.routes,{
+            initialEntries:["/otra-pagina"]
+        }); 
+
+        render(<RouterProvider router={routes} />)
+        expect(screen.getByTestId("home-page")).toBeDefined()
     })
 })
