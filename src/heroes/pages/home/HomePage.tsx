@@ -82,9 +82,10 @@ export function HomePage() {
             <TabsTrigger 
             onClick={()=> setSearchParams((searchParams) => {
               searchParams.set("tab", "Favorites");
+              searchParams.set("category", "favorites");
               return searchParams;
             })} 
-            value="Favorites">Favoritos ({favoriteCount})
+            value="Favorites" data-testid="btn-favorito">Favoritos ({favoriteCount})
             </TabsTrigger>
 
             <TabsTrigger 
