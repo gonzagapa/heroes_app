@@ -14,10 +14,10 @@ const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 export  const searchHero = async (options:SearchOptions) =>{
 
-    // const {name,team,category,universe, status, strength} = options;
-    // if(name == undefined && team == undefined && category == undefined){
-    //     return []
-    // }
+    const {name,team,category,universe, status, strength} = options;
+    if(name == undefined && team == undefined && category == undefined){
+        return []
+    }
 
     const {data} = await  api.get<Hero[]>("/api/heroes/search",{
         params:{
